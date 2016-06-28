@@ -28,6 +28,12 @@ SECTIONS
 		__rtmsymtab_start = .;
 		KEEP(*(RTMSymTab))
 		__rtmsymtab_end = .;
+
+		. = ALIGN(4);
+		__rt_init_start = .;
+		KEEP(*(SORT(.rti_fn*)))
+		__rt_init_end = .;
+		. = ALIGN(4);
 	}
 
 	. = ALIGN(4);
@@ -37,16 +43,36 @@ SECTIONS
 	.ctors :
 	{
 		PROVIDE(__ctors_start__ = .);
+		/* old GCC version uses .ctors */
 		KEEP(*(SORT(.ctors.*)))
 		KEEP(*(.ctors))
+		/* new GCC version uses .init_array */
+		KEEP (*(SORT(.init_array.*)))
+		KEEP (*(.init_array))
 		PROVIDE(__ctors_end__ = .);
 	}
 
+	. = ALIGN(4);
+	/* as a standalone section if you use ARM target.  */
+	/* The .ARM.exidx section is used for C++ exception handling. */
+	/* .ARM.exidx is sorted, so has to go in its own output section.  */
+	ARM.exidx :
+	{
+		PROVIDE(__exidx_start = .);
+		*(.ARM.exidx* .gnu.linkonce.armexidx.*)
+		/* This is used by the startup in order to initialize the .data secion */
+		_sidata = .;
+		PROVIDE(__exidx_end = .);
+	}
+
+	. = ALIGN(4);
 	.dtors :
 	{
 		PROVIDE(__dtors_start__ = .);
 		KEEP(*(SORT(.dtors.*)))
 		KEEP(*(.dtors))
+		KEEP (*(SORT(.fini_array.*)))
+		KEEP (*(.fini_array ))
 		PROVIDE(__dtors_end__ = .);
 	}
 

@@ -107,6 +107,9 @@ void rt_init_thread_entry(void* parameter)
 		/* init libc */
 		libc_system_init(RT_CONSOLE_DEVICE_NAME);
 		#endif
+		#ifdef RT_USING_CPLUSPLUS
+		cplusplus_system_init();
+		#endif
 #endif
 
 #if defined(RT_USING_DFS_UFFS)

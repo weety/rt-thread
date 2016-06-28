@@ -193,6 +193,7 @@ bss_loop:
     strlo   r0,[r1],#4              /* clear 4 bytes                    */
     blo     bss_loop                /* loop until done                  */
 
+#if 0
     /* call C++ constructors of global objects                          */
     ldr     r0, =__ctors_start__
     ldr     r1, =__ctors_end__
@@ -208,6 +209,7 @@ ctor_loop:
     b       ctor_loop
 
 ctor_end:
+#endif
 
     /* start RT-Thread Kernel        */
     ldr     pc, _rtthread_startup

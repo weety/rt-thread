@@ -99,7 +99,7 @@
 
 /* SECTION: C++ support */
 /* Using C++ support */
-/* #define RT_USING_CPLUSPLUS */
+#define RT_USING_CPLUSPLUS
 
 /* SECTION: Device filesystem support */
 /* using DFS support */
