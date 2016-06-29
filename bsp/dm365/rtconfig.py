@@ -25,7 +25,7 @@ if PLATFORM == 'gcc':
     CXX = PREFIX + 'g++'
     AS = PREFIX + 'gcc'
     AR = PREFIX + 'ar'
-    LINK = PREFIX + 'gcc'
+    LINK = PREFIX + 'g++'
     TARGET_EXT = 'axf'
     SIZE = PREFIX + 'size'
     OBJDUMP = PREFIX + 'objdump'
@@ -33,7 +33,8 @@ if PLATFORM == 'gcc':
 
     DEVICE = ' -mcpu=arm926ej-s'
     CFLAGS = DEVICE
-    CXXFLAGS = ' -fno-exceptions -fno-rtti -std=gnu++0x'
+    CXXFLAGS = ' -fno-rtti -std=gnu++0x'
+    #CXXFLAGS = ' -fno-exceptions -fno-rtti -std=gnu++0x'
     AFLAGS = ' -c' + DEVICE + ' -x assembler-with-cpp' + ' -DTEXT_BASE=' + TextBase
     LFLAGS = DEVICE + ' -nostartfiles -Wl,--gc-sections,-Map=rtthread_dm365.map,-cref,-u,_start -T dm365_ram.ld' + ' -Ttext ' + TextBase
 
